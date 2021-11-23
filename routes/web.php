@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,9 +33,16 @@ Route::get('/categories', function () {
     ]);
 });
 Route::get('/categories/{category:slug}', function(Category $category){
-    return view('category', [
-        'title' => $category->name,
-        'posts' => $category->posts,
-        'category' => $category->name
+    return view('posts', [
+        'title' => "Post By Category : $category->name",
+        'posts' => $category->posts->load('category', 'author')
+    ]);
+});
+Route::get('/authors/{author:username}', function (User $author) {
+    return view('posts', [
+        'title' => "Post By Author : $author->name",
+        'posts' => $author->posts->load('category', 'author')
+        //fungsi load juga sama seperti with tapi load ketika sudah melakusan routes model binding
+        //maksudnya ketika model sudah dipanggil maka ambil sisanya menggunakan load ketika menggunakan relationship table
     ]);
 });

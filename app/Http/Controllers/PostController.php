@@ -15,9 +15,13 @@ class PostController extends Controller
     public function index()
     {
         return view('posts',[
-            "title" => "posts",
-            "posts" => Post::all() 
+            "title" => "All Posts",
+            // "posts" => Post::all() 
+            "posts" => Post::with(['author', 'category'])->latest()->get() 
         ]);
+        //penggunaan with untuk mengatasi n+1 problem agar tidak querynya tidak berulang dan ringan sebelum melakukan routes model binding
+        //maksudnya with digunakan ketika untuk memanggil model saat pertama kali
+        //penggunaan latest untuk agar data terakhir yg diimputkan tampil pertama di form
     }
 
     /**
