@@ -16,8 +16,9 @@ class PostController extends Controller
     {
         return view('posts',[
             "title" => "All Posts",
+            "active" => 'posts', 
             // "posts" => Post::all() 
-            "posts" => Post::with(['author', 'category'])->latest()->get() 
+            "posts" => Post::latest()->get() 
         ]);
         //penggunaan with untuk mengatasi n+1 problem agar tidak querynya tidak berulang dan ringan sebelum melakukan routes model binding
         //maksudnya with digunakan ketika untuk memanggil model saat pertama kali
@@ -55,6 +56,7 @@ class PostController extends Controller
     {
         return view('post', [
             "title" => "single post",
+            "active" => 'posts', 
             "post" => $post
         ]);
     }
