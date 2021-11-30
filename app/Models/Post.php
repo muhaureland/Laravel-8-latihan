@@ -68,4 +68,10 @@ class Post extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+        // getRouteKeyName untuk mengakali resource agar bisa menggunakan slug...bukan menggunakan id
+    }
 }

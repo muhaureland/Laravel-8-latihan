@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Models\Category;
-use App\Models\User;
-use Clockwork\Storage\Search;
 use Illuminate\Http\Request;
 
-class PostController extends Controller
+class DashboardPostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,29 +14,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $title = '';
-        if (request('category')) {
-            $category = Category::firstWhere('slug', request('category'));
-            $title = ' in ' . $category->name;
-        }
-
-        if (request('author')) {
-            $author = User::firstWhere('username', request('author'));
-            $title = ' by ' . $author->name;
-        }
-        
-        return view('posts',[
-            "title"     => "All Posts" . $title,
-            // "posts" => Post::all() 
-            "posts"     => Post::latest()->filter(request(['search', 'category', 'author']))->paginate(7)->withQueryString()
+        return view('dashboard.posts.index', [
+            'posts' => Post::where('user_id', auth()->user()->id)->get()
         ]);
-
-        //withQueryString jika ada query sebelumnya, maka bawa query string itu
-
-        
-        //penggunaan with untuk mengatasi n+1 problem agar tidak querynya tidak berulang dan ringan sebelum melakukan routes model binding
-        //maksudnya with digunakan ketika untuk memanggil model saat pertama kali
-        //penggunaan latest untuk agar data terakhir yg diimputkan tampil pertama di form
     }
 
     /**
@@ -71,10 +48,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('post', [
-            "title" => "single post",
-            "active" => 'posts', 
-            "post" => $post
+        return view('dashboard.posts.show', [
+            'post' => $post
         ]);
     }
 
