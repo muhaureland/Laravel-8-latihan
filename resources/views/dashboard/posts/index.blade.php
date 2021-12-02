@@ -5,6 +5,8 @@
 </div>
 
 <div class="table-responsive">
+    <a href="/dashboard/posts/create" class="btn btn-primary">Create new post</a>
+    {{-- <a href="{{ route('dashboard.posts.create') }}" class="btn btn-primary">Create new post</a> --}}
     <table class="table table-striped table-sm">
     <thead>
         <tr>
