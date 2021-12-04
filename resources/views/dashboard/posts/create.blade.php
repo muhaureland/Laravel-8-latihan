@@ -9,8 +9,8 @@
         @csrf
         <div class="form-group">
             <label for="title">Judul</label>
-            <input type="text" class="form-control @error('judul') is-invalid @enderror" id="title" name="judul" placeholder="masukkan psot" autocomplete="off" value="{{ old('judul') }}">
-            @error('judul')
+            <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" placeholder="masukkan post" autocomplete="off" value="{{ old('title') }}">
+            @error('title')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
@@ -19,8 +19,8 @@
             <select class="form-control @error('category_id') is-invalid @enderror" name="category_id" id="category_id">
                     <option disabled selected>=== Pilih Kategori ===</option>
                     @foreach($categories as $result)
-                    {{-- <option value="{{ $result->id }}" {{ old('category_id') == $result->id ? 'selected' : '' }}>{{ $result->name }}</option> --}}
-                    <option value="{{ $result->id }}">{{ $result->name }}</option>
+                    <option value="{{ $result->id }}" {{ old('category_id') == $result->id ? 'selected' : '' }}>{{ $result->name }}</option>
+                    {{-- <option value="{{ $result->id }}">{{ $result->name }}</option> --}}
                     @endforeach
             </select>
             @error('category_id')
@@ -29,7 +29,7 @@
         </div>
         <div class="form-group">
             <label for="body">Body</label>
-            <input id="body" type="hidden" name="body" class="@error('body') is-invalid @enderror">
+            <input id="body" type="hidden" name="body" class="@error('body') is-invalid @enderror" value="{{ old('body') }}">
             <trix-editor input="body"></trix-editor>
             @error('body')
                 <div class="invalid-feedback">{{ $message }}</div>
