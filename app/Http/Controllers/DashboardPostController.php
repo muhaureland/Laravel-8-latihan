@@ -46,14 +46,20 @@ class DashboardPostController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'title'         => 'required|max:255|unique:posts',
+            'title'         => 'required|max:255',
             'category_id'   => 'required',
+            'gambar'        => 'image|file|max:1024',
             'body'          => 'required'
             
         ]);
 
+        // jika ada gambar jalankan fungsi dibawah..upload gambar ke folder post-gambar
+        if($request->file('gambar')){
+            $validatedData['gambar'] = $request->file('gambar')->store('post-gambar');
+        }
+
         $validatedData['user_id'] = auth()->user()->id;
-        $validatedData['slug'] = Str::slug($request->title);
+        $validatedData['slug'] = SlugService::createSlug(Post::class, 'slug', $request->title);
         $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 200);
     
         Post::create($validatedData);
@@ -118,14 +124,13 @@ class DashboardPostController extends Controller
 
 
         // cara slug uniq dengan sluggable...ada tanda garis merah karena php inteliphense nya...tapi tetap jalan g error
-        $rules = [
-            'title'         => 'required',
+        $validatedData = $request->validate([
+            'title'         => 'required|max:255',
             'category_id'   => 'required',
+            'gambar'        => 'image|file|max:1024',
             'body'          => 'required'
             
-        ];
-
-        $validatedData = $request->validate($rules);
+        ]);
 
         $validatedData['user_id'] = auth()->user()->id;
         $validatedData['slug'] = SlugService::createSlug(Post::class, 'slug', $request->title);
