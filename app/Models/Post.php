@@ -2,15 +2,21 @@
 
 namespace App\Models;
 
+use App\Models\Category;
+use Illuminate\Support\Str;
+use Illuminate\Foundation\Auth\User;
+use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Dotenv\Repository\Adapter\GuardedWriter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+
+
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, Sluggable;
 
-    // protected $fillable = ['title', 'excerpt', 'body'];
+    // protected $fillable = ['title', 'slug', 'excerpt', 'body'];
     protected  $guarded = ['id'];
 
     protected $with = ['category', 'author'];
@@ -73,5 +79,15 @@ class Post extends Model
     {
         return 'slug';
         // getRouteKeyName untuk mengakali resource agar bisa menggunakan slug...bukan menggunakan id
+    }
+
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 }
