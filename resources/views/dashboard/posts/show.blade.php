@@ -16,7 +16,7 @@
             <article class="my-3">
                 {!! $post->body !!}
             </article>
-            <a href="/posts">kembali</a>
+            <a href="/posts">kembali bos</a>
         </div>
     </div>
 </div>

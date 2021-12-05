@@ -12,7 +12,7 @@
                 @endif
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Search.." name="search" value="{{ request('search') }}">
-                    <button class="btn btn-danger" type="submit">Search ini boss ke dua</button>
+                    <button class="btn btn-danger" type="submit">Search ini boss ke tiga</button>
                 </div>
             </form>
         </div>
