@@ -12,7 +12,7 @@
                 @endif
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Search.." name="search" value="{{ request('search') }}">
-                    <button class="btn btn-danger" type="submit">Search ini boss ke tiga</button>
+                    <button class="btn btn-danger" type="submit">Search</button>
                 </div>
             </form>
         </div>
@@ -20,7 +20,13 @@
     @if ($posts->count())
     {{-- count untuk untuk menghitung jumlah postingan, nilainya akan menghasilkan true jika lebih dari 0--}}
     <div class="card bg-dark text-white">
-    <img src="https://source.unsplash.com/1200x400?{{ $posts[0]->category->name }}" class="card-img-top" alt="{{ $posts[0]->category->name }}">
+        @if ($posts[0]->gambar)
+            <div style="max-height: 350px; overflow:hidden;">
+                <img src="{{ asset('storage/' . $posts[0]->gambar) }}" alt="{{ $posts[0]->category->name }}" class="img-fluid">
+            </div>
+        @else
+            <img src="https://source.unsplash.com/1200x400?{{ $posts[0]->category->name }}" class="card-img-top" alt="{{ $posts[0]->category->name }}">
+        @endif
         <div class="card-body text text-center">
             <h3 class="card-title"><a href="/posts/{{ $posts[0]->slug }}" class="text-decoration-none">{{ $posts[0]->title }}</a></h3>
             <p>
@@ -41,7 +47,11 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="position-absolute bg-dark px-3 py-2"><a href="/posts?category={{ $post->category->slug }}">{{ $post->category->name }}</a></div>       
+                    @if ($post->gambar)
+                        <img src="{{ asset('storage/' . $post->gambar) }}" alt="{{ $post->category->name }}" class="img-fluid">
+                    @else
                     <img src="https://source.unsplash.com/1200x400/?{{ $post->category->name }}" class="card-img-top" alt="{{ $post->category->name }}">
+                    @endif
                     <div class="card-body">
                         <h5 class="card-title">{{ $post->title }}</h5>
                         <p>

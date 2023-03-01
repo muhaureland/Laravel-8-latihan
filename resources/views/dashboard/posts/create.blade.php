@@ -5,7 +5,7 @@
 </div>
 
 <div class="col-lg-8">
-    <form method="POST" action="/dashboard/posts">
+    <form method="POST" action="/dashboard/posts" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="title">Judul</label>
@@ -27,15 +27,25 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="body">Body</label>
-            <input id="body" type="hidden" name="body" class="@error('body') is-invalid @enderror" value="{{ old('body') }}">
-            <trix-editor input="body"></trix-editor>
-            @error('body')
+            <label">Thumbnail</label>
+            <img class="img-preview img-fluid">
+            <input type="file" class="form-control @error('gambar') is-invalid @enderror" id="gambar" name="gambar" onchange="previewImage()">
+            @error('gambar')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-outline-primary col-5 mt-3">tambahkan data</button>
+            <label>Body</label>
+            <div class="col-sm-12 col-md-7">
+                <input type="hidden" class="form-control @error('body') is-invalid @enderror" name="body" id="body" value="{{ old('body') }}">
+                <trix-editor input="body"></trix-editor>
+                @error('body')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-outline-primary col-5 mt-3">tambahkan data sodara</button>
         </div>
     </form>
 </div>
@@ -44,5 +54,18 @@
     document.addEventListener('trix-file-accept', function(e){
         e.prevenDefault();
     })
+
+    function previewImage() 
+    {
+        const image = document.querySelector('#gambar')
+        const imgPreview = document.querySelector('.img-preview');
+        imgPreview.style.display = 'block';
+        const oFReader = new FileReader();
+        oFReader.readAsDataURL(image.files[0]);
+        oFReader.onload = function(oFREvent)
+            {
+                imgPreview.src = oFREvent.target.result;
+            }
+    }
 </script>
 @endsection

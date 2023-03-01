@@ -19,25 +19,27 @@ class DatabaseSeeder extends Seeder
         
         
         // cara gunakan seeder
-        // User::create([
-            //     'name'      => 'awen',
-            //     'email'     => 'awen@gmail.com',
-            //     'password'  => bcrypt('123456')
-            // ]);
+        User::create([
+                'name'      => 'awen',
+                'username'  => 'awenese',
+                'email'     => 'awen@gmail.com',
+                'password'  => bcrypt('123456')
+            ]);
 
         User::factory(3)->create();
-        Category::create([
-            'name'  => 'web programming',
-            'slug'  => 'web-programming'
-        ]);
-        Category::create([
-            'name'  => 'personal',
-            'slug'  => 'personal'
-        ]);
-        Category::create([
-            'name'  => 'design kreative',
-            'slug'  => 'design-kreative'
-        ]);
+        Category::factory(30)->create();
+        // Category::create([
+        //     'name'  => 'web programming',
+        //     'slug'  => 'web-programming'
+        // ]);
+        // Category::create([
+        //     'name'  => 'personal',
+        //     'slug'  => 'personal'
+        // ]);
+        // Category::create([
+        //     'name'  => 'design kreative',
+        //     'slug'  => 'design-kreative'
+        // ]);
         Post::factory(20)->create();
 
         // Post::create([
